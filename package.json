@@ -1,0 +1,19 @@
+{
+  "name": "deelow-registrations",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Deelowtrayne/registrations-expressjs.git"
+  },
+  "author": "Luvuyo Sono",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Deelowtrayne/registrations-expressjs/issues"
+  },
+  "homepage": "https://github.com/Deelowtrayne/registrations-expressjs#readme"
+}
