@@ -1,0 +1,44 @@
+
+<div class="main">
+    <div class="row">
+        <label for="">Registration number:
+            <span class="alert">{{alert}}</span>
+        </label>
+        <form action="/add" method="post">
+            <input type="text" name="regNumber" class="regNumber">
+            <button class="submit-btn">Add</button>
+        </form>
+    </div>
+    <div class="row">
+        <label for="">Town:</label>
+        <select onchange="filterBy()" class="town-select" name="town_select">
+            <option value="all">All Towns</option>
+            <option value="CA">Cape Town</option>
+            <option value="CJ">paarl</option>
+            <option value="CAW">George</option>
+            <option value="CL">Stellenbosch</option>
+        </select>
+    </div>
+
+    <div class="row">
+        <button type="button" class="clear-btn">
+            <i class="fas fa-trash-alt"></i>
+        </button>
+        <ul class="display-area">
+            <!-- Registration numbers get listed down here -->
+            {{#each regList}}
+            <li class="reg-plate">
+                {{ reg_number }}
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+</div>
+
+<!-- scripts -->
+<script>
+    function filterBy() {
+        let tag = document.querySelector('.town-select').value;
+        location.href = 'filter/' + tag;
+    }
+</script>

@@ -1,0 +1,175 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  padding: 0px;
+  margin: 0px;
+}
+
+body {
+  font-family: 'Helvetica Neue', helvetica, sans-serif;
+  font-size: 1.4em;
+  background: #F0F0F1;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+h1 {
+  font-size: 7vw;
+}
+
+h2 {
+  font-size: 6vw;
+  color: #333;
+}
+
+h1 small {
+  display: block;
+  font-size: 40%;
+  color: #fff;
+}
+
+hr {
+  display: block;
+  height: 1px;
+  border: none;
+  background: #ccc;
+}
+.container {
+  width: 95%;
+  max-width: 920px;
+  margin-top: 2rem;
+  margin: 0 auto;
+}
+
+.container:before, .container:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.topbar {
+  text-align: left;
+  color: #fff;
+  padding: 0.5rem 2rem;
+  background: crimson;
+}
+
+.topbar .row {
+  background: inherit;
+  border: none;
+  box-shadow: none;
+  padding: 0px;
+}
+
+.half {
+  margin-bottom: 2rem;
+}
+
+.main {
+  margin-top: 2rem;
+}
+
+.alert, .alert2 {
+  display: block;
+  color: crimson;
+  font-size: small;
+}
+
+.row {
+  margin-bottom: 1rem;
+  padding: 2rem;
+  background: #fff;
+  border: 1px #ccc solid;
+  box-shadow: 0px 2px 8px #ccc;
+  position: relative;
+}
+
+.row label {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.row input {
+  width: 70%;
+  max-width: 500px;
+  padding: 0.5rem;
+}
+
+.row select {
+  width: 100%;
+  min-width: 220px;
+  max-width: 500px;
+  padding: 0.5rem;
+  font-size: large;
+}
+
+.row button {
+  width: auto;
+  padding: 0.5rem;
+  width: 4rem;
+}
+
+#display-area,
+.display-area {
+  list-style-type: none;
+  text-align: center;
+  padding: 0;
+}
+
+.reg-plate {
+  display: inline-block;
+  max-width: 200px;
+  padding: 0.4rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  background: rgba(255, 255, 0, 0.637);
+  border: 2px #2a2a2a solid;
+  border-radius: 4px;
+}
+
+.clear-btn{
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: large;
+  margin: 1rem;
+  background: transparent;
+  border: none;
+}
+.clear-btn:hover {
+  border: 1px #F0F0F1 solid;
+  background: crimson;
+  color: #fff;
+  border-radius: 4px;
+}
+
+footer {
+  display: block;
+  width: 100%;
+  padding: 1.2rem;
+  text-align: center;
+  font-size: small;
+  background-color: crimson;
+}
+
+@media screen and (min-width: 768px) {
+  h1 {
+    font-size: 2.5vw;
+  }
+  h2 {
+    font-size: 2vw;
+  }
+
+  hr {
+    display: none;
+  }
+}
