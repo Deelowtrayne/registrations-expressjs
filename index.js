@@ -57,6 +57,17 @@ app.post("/add", async function (req, res, next) {
     }
 });
 
+app.get("/filter/:tag", async function (req, res, next) {
+    try {
+        let tag = req.params.tag;
+        res.render('home', {
+            regList : await registrations.filterBy(tag)
+        });
+    } catch (err) {
+        next(err);
+    }
+});
+
 app.listen(PORT, function () {
     console.log('Listening on port ', PORT);
 });

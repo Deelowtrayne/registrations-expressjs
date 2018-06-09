@@ -1,18 +1,18 @@
 'use strict';
 module.exports = function (pool) {
-  var reg = "";
-  var regList = {};
+
+  var VALID_TAGS = ['CA', 'CL', 'CJ', 'CAW'];
 
   async function setReg(num) {
     // validate input
     num = num.toUpperCase();
-    if (!num.startsWith('CA') && !num.startsWith('CL') && !num.startsWith('CJ') && !num.startsWith('CAW')) {
+    let townTag = num.substring(0, 2).trim();
+    if (!num || num === '' || !VALID_TAGS.contains(townTag)) {
       return false;
     }
 
     let result = await pool.query('SELECT * FROM reg_numbers WHERE reg_number=$1', [num])
     if (result.rowCount === 0) {
-      let townTag = num.substring(0, 2).trim();
       let townID = await pool.query('SELECT id FROM towns WHERE town_tag=$1', [townTag]);
       result = await pool.query('INSERT INTO reg_numbers (reg_number, town) VALUES ($1, $2)', [num, townID.rows[0].id]);
       return true;
@@ -24,17 +24,21 @@ module.exports = function (pool) {
     return result.rows;
   }
 
-  function filterByTown(town) {
-    let regs = Object.keys(regList);
+  async function filterByTown(town) {
 
-    if (town === 'all')
-      return regs;
+    // if (!VALID_TAGS.contains(town)){
+    //   return;
+    // }
+          
+    let result = await pool.query('SELECT reg_number, town FROM reg_numbers');
 
-    let result = regs.filter(function (reg) {
-      return reg.startsWith(town);
-    });
-    // location.hash = town;
-    return result;
+    if (town !== 'all'){
+      console.log(result.rows);
+      let foundTAG = await pool.query('SELECT id FROM towns WHERE town_tag=$1', [town]);
+      return result.rows.filter(current => current.town == foundTAG.rows[0].id);
+    }
+    
+    return result.rows;
   }
 
   return {
