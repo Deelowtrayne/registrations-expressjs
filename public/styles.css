@@ -43,6 +43,19 @@ hr {
   border: none;
   background: #ccc;
 }
+
+button {
+  border: none;
+  background: transparent;
+  font-size: large;
+}
+button:hover {
+  color: #fff;
+  border-radius: 4px;
+  background: green;
+}
+
+
 .container {
   width: 95%;
   max-width: 920px;
@@ -98,16 +111,13 @@ hr {
   margin-bottom: 1rem;
 }
 
-.row input {
+.row input, select {
   width: 70%;
   max-width: 500px;
   padding: 0.5rem;
 }
 
 .row select {
-  width: 100%;
-  min-width: 220px;
-  max-width: 500px;
   padding: 0.5rem;
   font-size: large;
 }
@@ -118,7 +128,20 @@ hr {
   width: 4rem;
 }
 
-#display-area,
+.new-town {
+  display: none;
+  margin-top: 0.5rem;
+  padding: 1rem;
+}
+
+.new-town input {
+  max-width: 400px;
+  width: 75%;
+}
+.new-town input:last-of-type {
+  max-width: 80px;
+}
+
 .display-area {
   list-style-type: none;
   text-align: center;
@@ -161,6 +184,10 @@ footer {
   background-color: crimson;
 }
 
+.show {
+  display: block;
+}
+
 @media screen and (min-width: 768px) {
   h1 {
     font-size: 2.5vw;
@@ -172,4 +199,8 @@ footer {
   hr {
     display: none;
   }
+  /* .new-town {
+    margin-top: 0.5rem;
+    padding: 1rem;
+  } */
 }

@@ -29,7 +29,13 @@ app.use(express.static('public'));
 // handlebars
 app.engine('handlebars', exphbs({
     defaultLayout: 'main',
-    helpers: {}
+    helpers: {
+        active: function() {
+            if ( this.selected ) {
+                return 'selected';
+            }
+        }
+    }
 }));
 
 app.set('view engine', 'handlebars');
@@ -41,7 +47,8 @@ app.use(bodyParser.json());
 app.get("/", async function (req, res, next) {
     try {
         res.render('home', {
-            regList: await registrations.all()
+            regList: await registrations.all(),
+            filterTowns: await registrations.tags()
         });
     } catch (err) {
         next(err);
@@ -58,15 +65,36 @@ app.post("/add", async function (req, res, next) {
     }
 });
 
+app.post("/towns/new", async function (req, res, next) {
+    try {
+        let num = req.body.regNumber;
+        await registrations.addTown({
+            name: req.body.townName,
+            tag: req.body.townTag
+        });
+        res.redirect('/');
+    } catch (err) {
+        next(err);
+    }
+});
+
+
+
 app.get("/filter/:tag", async function (req, res, next) {
     try {
         let tag = req.params.tag;
         res.render('home', {
-            regList : await registrations.filterBy(tag)
+            regList : await registrations.filterBy(tag),
+            filterTowns: await registrations.tags(tag)
         });
     } catch (err) {
         next(err);
     }
+});
+
+app.get("/filter/filter:tag", function(req, res){
+    let tag = req.params.tag;
+    res.redirect("/filter/" + tag);
 });
 
 app.listen(PORT, function () {
