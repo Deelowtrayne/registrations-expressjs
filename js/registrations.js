@@ -7,7 +7,7 @@ module.exports = function (pool) {
     // validate input
     num = num.toUpperCase();
     let townTag = num.substring(0, 2).trim();
-    if (!num || num === '' || !VALID_TAGS.contains(townTag)) {
+    if (!num || num === '' || !VALID_TAGS.includes(townTag)) {
       return false;
     }
 
@@ -26,9 +26,9 @@ module.exports = function (pool) {
 
   async function filterByTown(town) {
 
-    // if (!VALID_TAGS.contains(town)){
-    //   return;
-    // }
+    if (!VALID_TAGS.includes(town)){
+      return false;
+    }
           
     let result = await pool.query('SELECT reg_number, town FROM reg_numbers');
 
