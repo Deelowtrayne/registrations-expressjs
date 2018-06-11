@@ -4,7 +4,8 @@ var app = express();
 // import handlebars and body-parser
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
-
+const flash = require('express-flash');
+const session = require('express-session');
 const PORT = process.env.PORT || 3000;
 
 let useSSL = false;
@@ -12,7 +13,7 @@ if (process.env.DATABASE_URL){
     useSSL = true;
 }
 
-const connectionString = process.env.DATABASE_URL || 'postgresql://deelowtrayne:nomawonga@localhost:5432/registrations';
+const connectionString = process.env.DATABASE_URL || 'postgresql://coder:coder123@localhost:5432/registrations';
 
 const pg = require('pg');
 const Pool = pg.Pool;
@@ -43,6 +44,14 @@ app.set('view engine', 'handlebars');
 //middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(session({
+    secret: 'Deelowtrayne',
+    resave: false,
+    saveUninitialized: true
+  }));
+
+app.use(flash());
+
 
 app.get("/", async function (req, res, next) {
     try {
@@ -59,6 +68,7 @@ app.post("/add", async function (req, res, next) {
     try {
         let num = req.body.regNumber;
         await registrations.add(num);
+        req.flash('newReg_alert', 'Added new registration number!');
         res.redirect('/');
     } catch (err) {
         next(err);
@@ -67,18 +77,16 @@ app.post("/add", async function (req, res, next) {
 
 app.post("/towns/new", async function (req, res, next) {
     try {
-        let num = req.body.regNumber;
         await registrations.addTown({
             name: req.body.townName,
             tag: req.body.townTag
         });
+        req.flash('newTown_alert', 'Added new town!');
         res.redirect('/');
     } catch (err) {
         next(err);
     }
 });
-
-
 
 app.get("/filter/:tag", async function (req, res, next) {
     try {

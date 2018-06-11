@@ -6,7 +6,7 @@ module.exports = function (pool) {
   async function setReg(num) {
     // validate input
     num = num.toUpperCase();
-    let townTag = num.substring(0, 2).trim();
+    let townTag = num.substring(0, 3).trim();
     if (!num || num === '' || !VALID_TAGS.includes(townTag)) {
       return false;
     }
@@ -26,7 +26,7 @@ module.exports = function (pool) {
 
   async function getAllTags(tag) {
     let towns = await pool.query('SELECT town_name, town_tag FROM towns');
-
+ 
     for (let i = 0; i < towns.rowCount; i++) {
       let current = towns.rows[i];
       if (current.town_tag === tag) {
@@ -41,10 +41,12 @@ module.exports = function (pool) {
     if (VALID_TAGS.includes(newTown.tag)) {
       return false;
     }
+
+    VALID_TAGS.push(newTown.tag);
     // see if it doesn't already exist in databse
     let result = await pool.query('SELECT id FROM towns WHERE town_tag=$1', [newTown.tag]);
     if (result.rowCount === 0) {
-      await pool.query('INSERT INTO town (town_name, town_tag) VALUES ($1, $2)', [
+      await pool.query('INSERT INTO towns (town_name, town_tag) VALUES ($1, $2)', [
         newTown.name, newTown.tag
       ]);
       return true;
@@ -59,13 +61,11 @@ module.exports = function (pool) {
     }
 
     let result = await pool.query('SELECT reg_number, town FROM reg_numbers');
-
     if (town !== 'all') {
       console.log(result.rows);
       let foundTAG = await pool.query('SELECT id FROM towns WHERE town_tag=$1 limit 1', [town]);
       return result.rows.filter(current => current.town == foundTAG.rows[0].id);
     }
-
     return result.rows;
   }
 

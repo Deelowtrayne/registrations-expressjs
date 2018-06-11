@@ -1,10 +1,10 @@
 <div class="main">
     <div class="row">
         <label for="">Registration number:
-            <span class="alert">{{alert}}</span>
+            <span class="alert">{{messages.newReg_alert}}</span>
         </label>
         <form action="/add" method="post">
-            <input type="text" name="regNumber" class="regNumber">
+            <input type="text" name="regNumber" class="regNumber" pattern="[A-Z]{2,3}\s\d{3}\W\d{3}">
             <button class="add-btn">
                 <i class="fa fa-plus"></i>
             </button>
@@ -12,7 +12,9 @@
     </div>
 
     <div class="row">
-        <label for="">Town:</label>
+        <label for="">Town:
+            <span class="alert">{{messages.newTown_alert}}</span>
+        </label>
         <select onchange="filterBy()" class="town-select" name="town_select">
             <option value="all">All Towns</option>
             {{#each filterTowns}}
