@@ -1,12 +1,28 @@
+"use strict";
+const assert = require('assert');
+const pg = require('pg');
+const Pool = pg.Pool;
+
+let connectionString = process.env.DATABASE_URL || 'postgresql://coder:coder123@localhost:5432/registrations';
+let useSSL = process.env.DATABASE_URL ? true : false;
+const pool = new Pool({
+  connectionString,
+  ssl: useSSL
+});
+
+
 describe('Tests Registration Numbers application', function(){
+  beforeEach(async function () {
+    await pool.query('TRUNCATE reg_numbers');
+  });
   it ('Should return true if the set registration number matches the expected (CA12312)', function(){
     let registr = Registration();
-    registr.reg('CA 12312');
+    await registr.reg('CA 12312');
     assert.equal(registr.regNumber(), 'CA 12312');
   });
   it ('Should return true if the set registration number matches the expected (CJ12312)', function(){
     let registration = Registration();
-    registration.reg('CJ 12312');
+    await registration.reg('CJ 12312');
     assert.equal(registration.regNumber(), 'CJ 12312');
   });
   it ('Should return true if the set registration number matches the expected (CAW12312)', function(){
